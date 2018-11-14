@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.embed.swing.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.input.MouseEvent?>
+
+<AnchorPane id="AnchorPane" prefHeight="514.0" prefWidth="793.0" style="-fx-background-color: eeeeee" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oscilloscope.FXMLDocumentController">
+    <children>
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <ToolBar prefHeight="40.0" prefWidth="793.0">
+         <items>
+            <MenuButton mnemonicParsing="false" text="File">
+              <items>
+                  <MenuItem fx:id="loadX" mnemonicParsing="false" onAction="#selectXCSV" text="load X csv file" />
+                  <MenuItem fx:id="loadY" mnemonicParsing="false" onAction="#selectYCSV" text="load Y csv file" />
+              </items>
+            </MenuButton>
+            <Button mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" />
+         </items>
+      </ToolBar>
+      <TextField layoutX="514.0" layoutY="230.0" onAction="#enterXPos" prefHeight="25.0" prefWidth="95.0" fx:id="xPos" />
+      <TextField fx:id="yPos" layoutX="630.0" layoutY="230.0" onAction="#enterYPos" prefHeight="25.0" prefWidth="95.0" />
+      <TextField fx:id="vDiv" layoutX="514.0" layoutY="368.0" onAction="#enterVDiv" prefHeight="25.0" prefWidth="95.0" />
+      <TextField fx:id="timeDiv" layoutX="630.0" layoutY="368.0" onAction="#enterTimeDiv" prefHeight="25.0" prefWidth="95.0" />
+      <TextField fx:id="sampling" layoutX="388.0" layoutY="230.0" onAction="#enterSamplingValue" prefHeight="25.0" prefWidth="95.0" />
+      <Label layoutX="410.0" layoutY="137.0" text="Sampling" />
+      <Label layoutX="547.0" layoutY="137.0" text="X Pos" />
+      <Label layoutX="664.0" layoutY="137.0" text="Y Pos" />
+      <Label layoutX="547.0" layoutY="265.0" text="V/Div" />
+      <Label layoutX="658.0" layoutY="265.0" text="Sec/Div" />
+      <ComboBox fx:id="source" layoutX="390.0" layoutY="293.0" onAction="#choiceActionPerformed" prefHeight="25.0" prefWidth="95.0" promptText="Source" />
+      <ScatterChart fx:id="chartArea" layoutX="26.0" layoutY="85.0" prefHeight="343.0" prefWidth="343.0" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="424.0" AnchorPane.topAnchor="85.0">
+        <xAxis>
+          <NumberAxis side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" side="LEFT" />
+        </yAxis>
+      </ScatterChart>
+      <SwingNode fx:id="samplingKnobJ" layoutX="400.0" layoutY="160.0" />
+      <SwingNode layoutX="530.0" layoutY="160.0" fx:id="xPosKnobJ" />
+      <SwingNode fx:id="yPosKnobJ" layoutX="650.0" layoutY="160.0" />
+      <SwingNode fx:id="vDivKnobJ" layoutX="530.0" layoutY="290.0" />
+      <SwingNode fx:id="timeDivKnobJ" layoutX="650.0" layoutY="290.0" />
+    </children>
+</AnchorPane>
