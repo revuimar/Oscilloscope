@@ -140,20 +140,39 @@ public class DataGeneration extends ArrayList{
         newSeries.add(1,new ArrayList<>());
         for(int i = 0; i<((List)this.get(1)).size();i++){
             ((List)newSeries.get(1)).add(((Double)((List)this.get(1)).get(i))
-                    + ((direction) ? (0.1):(-0.1)));
+               + ((direction) ? (0.1):(-0.1)));
+            
         }
         return newSeries;
     }
     
-    DataGeneration moveXDirection(boolean direction){
+    DataGeneration moveXDirection(boolean direction, int mode){
         DataGeneration newSeries = new DataGeneration();
         Iterator<List> listX = ((List)this.get(0)).iterator();
         Iterator<List> listY = ((List)this.get(1)).iterator();
+        if(mode == LISSA){
+            try{
+                newSeries.add(0,new ArrayList<>());
+                newSeries.add(1,(List)this.get(1));
+                for(int i = 0; i<((List)this.get(0)).size();i++){
+                ((List)newSeries.get(0)).add(((Double)((List)this.get(0)).get(i))
+                   + ((direction) ? (0.1):(-0.1)));
+                }
+            }catch(java.lang.ArrayIndexOutOfBoundsException e){
+                return this;
+            }
+            return newSeries;
+        }
+        else{
+            try{
         newSeries.add(0,new ArrayList<>());
         newSeries.add(1,new ArrayList<>());
         boolean first = true;
         int lastIndex = ((List)this.get(0)).size()-1;
         Double x = null, y = null;
+        if(mode == LISSA){
+            
+        }
         if(direction == LEFT){
             x = 2 * ((Double)((List)this.get(0)).get(lastIndex)) - (Double)((List)this.get(0)).get(lastIndex-1);
             y = (Double)((List)this.get(1)).get(0);
@@ -185,6 +204,10 @@ public class DataGeneration extends ArrayList{
         if(direction == LEFT){
             ((List)newSeries.get(0)).add(x);
             ((List)newSeries.get(1)).add(y);
+        }
+            }catch(java.lang.ArrayIndexOutOfBoundsException e){
+                return this;
+            }
         }
         return newSeries;
     }

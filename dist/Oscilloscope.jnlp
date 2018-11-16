@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Oscilloscope.jar" size="16746" download="eager" />
+    <jar href="Oscilloscope.jar" size="17281" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Oscilloscope" >
     <param name="requiredFXVersion" value="8.0+"/>

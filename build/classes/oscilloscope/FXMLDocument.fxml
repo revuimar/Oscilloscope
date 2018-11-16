@@ -18,8 +18,8 @@
          <items>
             <MenuButton mnemonicParsing="false" text="File">
               <items>
-                  <MenuItem fx:id="loadX" mnemonicParsing="false" onAction="#selectXCSV" text="load X csv file" />
-                  <MenuItem fx:id="loadY" mnemonicParsing="false" onAction="#selectYCSV" text="load Y csv file" />
+                  <MenuItem fx:id="loadX" mnemonicParsing="false" onAction="#selectCSV" text="load X csv file" />
+                  <MenuItem fx:id="loadY" mnemonicParsing="false" onAction="#selectCSV" text="load Y csv file" />
               </items>
             </MenuButton>
             <Button mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" />

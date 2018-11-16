@@ -5,6 +5,7 @@
  */
 package oscilloscope;
 
+import javafx.scene.control.MenuItem;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 /**
@@ -68,24 +70,23 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     @FXML
-    public void selectXCSV(ActionEvent event){
+    public void selectCSV(ActionEvent event){
+        File samplesDirectory = new File(System.getProperty("user.dir"));
         File file = filechoice.showOpenDialog(null);
+        filechoice.setInitialDirectory(samplesDirectory);
+        
+        System.out.println(((MenuItem)(event.getSource())).getId());
+        
         if (file == null) {
             System.out.println("Open command cancelled by user.");
         }
         else{
-            dataX.loadCSV(file);
-        }
-    }
-    @FXML
-    protected void selectYCSV(ActionEvent event){
-        //not very smart TODO refactor
-        File file = filechoice.showOpenDialog(null);
-        if (file == null) {
-            System.out.println("Open command cancelled by user.");
-        }
-        else{
-            dataY.loadCSV(file);
+            if("loadX".equals(((MenuItem)event.getSource()).getId())){
+                dataX.loadCSV(file);
+            }
+            else if("loadY".equals(((MenuItem)event.getSource()).getId())){
+                dataY.loadCSV(file);
+            }
         }
     }
     @FXML
@@ -133,7 +134,12 @@ public class FXMLDocumentController implements Initializable {
     }
     @FXML
     protected void enterYPos(ActionEvent event) {
-        int value = Integer.valueOf(yPos.getText());
+        int value = 0;
+        try{
+            value = Integer.valueOf(yPos.getText());
+        }catch(NumberFormatException e){
+            value = 0;
+        }
         switch (value) {
             case 1:
                 dataCurrent = dataCurrent.moveYDirection(DataGeneration.RIGHT);
@@ -142,7 +148,7 @@ public class FXMLDocumentController implements Initializable {
                 dataCurrent = dataCurrent.moveYDirection(DataGeneration.LEFT);
                 break;
             default:
-                yPos.setText("0");
+                //yPos.setText("0");
                 return;
         }
         swapGraphData(dataCurrent);
@@ -152,21 +158,37 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     
     protected void enterXPos(ActionEvent event) {
-        int value = Integer.valueOf(xPos.getText());
+        int value = 0;
+        try{
+            value = Integer.valueOf(xPos.getText());
+        }catch(NumberFormatException e){
+            value = 0;
+        }
+        int mode = 0;
+        boolean direction = false;
+        switch((String)source.getValue()){
+            default:
+                mode = DataGeneration.NORMAL;
+                break;
+            case "XY":
+                mode = DataGeneration.LISSA;
+                break;
+        }
         switch (value) {
             case 1:
-                dataCurrent = dataCurrent.moveXDirection(DataGeneration.RIGHT);
+                direction = DataGeneration.RIGHT;
                 break;
             case -1:
-                dataCurrent = dataCurrent.moveXDirection(DataGeneration.LEFT);
+                direction = DataGeneration.LEFT;
                 break;
             default:
-                xPos.setText("0");
+                //xPos.setText("0");
                 return;
         }
+        dataCurrent = dataCurrent.moveXDirection(direction,mode);
         swapGraphData(dataCurrent);
-        dataCurrent.calculateDataboundaries(xAxis,yAxis);
-        System.out.println(dataCurrent.get(0));
+        if(mode != DataGeneration.LISSA)
+            dataCurrent.calculateDataboundaries(xAxis,yAxis);
     }
     @FXML
     protected void enterVDiv(ActionEvent event){
